@@ -70,7 +70,7 @@ public class TickTickProviderHelper {
         List<TickTickTask> tasks = new ArrayList<TickTickTask>();
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = null;
-        for(int i=0;i<10;i++)
+        for(int i=0;i<20;i++)
         {
         try {
             cursor = resolver.query(TASK_URI, null, null, null, null);
