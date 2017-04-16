@@ -10,6 +10,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.SystemClock;
+import android.provider.AlarmClock;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TimeFormatException;
@@ -36,6 +37,7 @@ public class Receiver extends BroadcastReceiver {
     public void onReceive(Context ctx, Intent intent) { //Проверяет таски
         if(intent.getAction()=="check_tasks")
         {//Событие проверки тасков
+            Log.d("tickLog","TasksChecking");
             List<TickTickTask> tasks = TickTickProviderHelper.getAllTasks(ctx);
             ArrayList<TickTickTask> important = new ArrayList<TickTickTask>();
 
@@ -53,16 +55,29 @@ public class Receiver extends BroadcastReceiver {
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
                     am.setExact(AlarmManager.RTC_WAKEUP, task.reminderTime, pendingIntent);
                 }
+                else {
+                    Log.d("tickLog","OldTask");
+                    Intent i = new Intent(AlarmClock.ACTION_SET_TIMER);
+                    i.putExtra(AlarmClock.EXTRA_MESSAGE, task.title);
+                    i.putExtra(AlarmClock.EXTRA_LENGTH, 1);
+                    i.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    ctx.startActivity(i);
+                }
             }
             importantTasksGlobal = important;
         }
         else // Время напоминания
         {
-            Intent intentRunRinger = new Intent(ctx, Ringer_Act.class);
-            intentRunRinger.putExtra("taskTitle",intent.getAction());
-            intentRunRinger.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            ctx.getApplicationContext().startActivity(intentRunRinger);
-
+            Log.d("tickLog","Reminder!");
+            Intent i = new Intent(AlarmClock.ACTION_SET_TIMER);
+            i.putExtra(AlarmClock.EXTRA_MESSAGE, intent.getAction());
+            i.putExtra(AlarmClock.EXTRA_LENGTH, 1);
+            i.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ctx.startActivity(i);
         }
+
+        ctx.startService(new Intent(ctx, StarterService.class));
     }
 }

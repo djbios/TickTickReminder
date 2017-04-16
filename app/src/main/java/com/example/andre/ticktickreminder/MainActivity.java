@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -33,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void ButtonClick(View view)
     {
+        Intent intenttoRun = new Intent(this,Receiver.class);
+        intenttoRun.setAction("check_tasks");
+        sendBroadcast(intenttoRun);
+        SystemClock.sleep(2000);
         updateTextView(Receiver.importantTasksGlobal);
-
     }
 
     public  void updateTextView(ArrayList<TickTickProviderHelper.TickTickTask> tasks)
