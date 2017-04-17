@@ -31,7 +31,7 @@ public class StarterService extends Service {
         Intent intenttoRun = new Intent(this,Receiver.class);
         intenttoRun.setAction("check_tasks");
         PendingIntent pendingIntent =  PendingIntent.getBroadcast(this, 0, intenttoRun, 0);
-        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),10000,pendingIntent);
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),60000,pendingIntent);
         startServiceForeground(intent, flags, startId);
         Log.d("tickLog","runned");
         return START_STICKY;

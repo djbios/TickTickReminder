@@ -77,7 +77,8 @@ public class Receiver extends BroadcastReceiver {
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ctx.startActivity(i);
         }
-
-        ctx.startService(new Intent(ctx, StarterService.class));
+        if(intent.getAction()=="YouWillNeverKillMe") {
+            ctx.startService(new Intent(ctx, StarterService.class));
+        }
     }
 }
