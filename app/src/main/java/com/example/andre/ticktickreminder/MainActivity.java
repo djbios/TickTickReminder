@@ -43,16 +43,17 @@ public class MainActivity extends AppCompatActivity {
 
     public  void updateTextView(ArrayList<TickTickProviderHelper.TickTickTask> tasks)
     {
-        ListView textbox = (ListView)  findViewById(R.id.list);
-        ArrayList<String> lines = new ArrayList<>();
-        for(TickTickProviderHelper.TickTickTask task:tasks)
-        {
-            lines.add(task.title +" "+DateFormat.format("dd/MM/yyyy hh:mm:ssaa",task.reminderTime).toString());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, lines);
 
-        textbox.setAdapter(adapter);
+            ListView textbox = (ListView) findViewById(R.id.list);
+            ArrayList<String> lines = new ArrayList<>();
+            for (TickTickProviderHelper.TickTickTask task : tasks) {
+                lines.add(task.title + " " + DateFormat.format("dd/MM/yyyy hh:mm:ssaa", task.reminderTime).toString());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, lines);
+
+            textbox.setAdapter(adapter);
+
     }
 
 
